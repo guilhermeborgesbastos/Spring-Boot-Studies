@@ -11,6 +11,7 @@
 	<groupId>com.pattern</groupId>
 	<artifactId>builder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>builder</name>
 	<description>Demo project for Spring Boot</description>
 
