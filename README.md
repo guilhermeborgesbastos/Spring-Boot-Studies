@@ -8,56 +8,45 @@ A generic repository for study purposes, with all the exercises from the https:/
 [Get back to the main Summary Page.](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies)
 
 
-## Spring Boot - Build Systems
+## Spring Boot - Code Structure
 
-By using Spring Boot, choosing a build system is an important task. We recommend Maven or Gradle as they provide a good support for dependency management. Spring does not support well other build systems.ing Spring Boot application, we can create a war file to deploy into the web server. In this branch, you are going to learn how to create a WAR file and deploy the Spring Boot application in Tomcat web server.
+Spring Boot does not have any code layout to work with. However, there are some best practices that will help us. This chapter talks about them in detail.
 
-[Read more](https://www.tutorialspoint.com/spring_boot/spring_boot_build_systems.htm)
+[Read more](https://www.tutorialspoint.com/spring_boot/spring_boot_code_structure.htm)
 
-### Dependency Management
-Spring Boot team provides a list of dependencies to support the Spring Boot version for its every release. You do not need to provide a version for dependencies in the build configuration file. Spring Boot automatically configures the dependencies version based on the release. Remember that when you upgrade the Spring Boot version, dependencies also will upgrade automatically.
+###  Default package
+A class that does not have any package declaration is considered as a default package. Note that generally a default package declaration is not recommended. Spring Boot will cause issues such as malfunctioning of Auto Configuration or Component Scan, when you use default package.
 
-**Note** − If you want to specify the version for dependency, you can specify it in your configuration file. However, the Spring Boot team highly recommends that it is not needed to specify the version for dependency.
+**Note** − Java's recommended naming convention for package declaration is reversed domain name. For example − **com.tutorialspoint.myproject**
 
-#### Maven Dependency - *Used on this branch*
+###  Typical Layout
 
-For Maven configuration, we should inherit the Spring Boot Starter parent project to manage the Spring Boot Starters dependencies. For this, simply we can inherit the starter parent in our pom.xml file as shown below.
+The typical layout of Spring Boot application is shown in the image given below −
+
+<img src="img/typical_layout_of_spring_boot_application.jpg " align="center" />
+
+The *Application.java* file should declare the main method along with **@SpringBootApplication**. Observe the code given below for a better understanding −
 ```
-<parent>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-parent</artifactId>
-   <version>1.5.8.RELEASE</version>
-</parent>
-```
-We should specify the version number for Spring Boot Parent Starter dependency. Then for other starter dependencies, we do not need to specify the Spring Boot version number. Observe the code given below −
-```
-<dependencies>
-   <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-   </dependency>
-</dependencies>
-```
+package com.tutorialspoint.myproject;
 
-#### Gradle Dependency
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-We can import the Spring Boot Starters dependencies directly into build.gradle file. We do not need Spring Boot start Parent dependency like Maven for Gradle. Observe the code given below −
-```
-buildscript {
-   ext {
-      springBootVersion = '1.5.8.RELEASE'
-   }
-   repositories {
-      mavenCentral()
-   }
-   dependencies {
-      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-   }
+@SpringBootApplication
+public class Application {
+   public static void main(String[] args) {SpringApplication.run(Application.class, args);}
 }
 ```
-Similarly, in Gradle, we need not specify the Spring Boot version number for dependencies. Spring Boot automatically configures the dependency based on the version.
-```
-dependencies {
-   compile('org.springframework.boot:spring-boot-starter-web')
-}
-```Spring Boot - Build SystemsSpring Boot - Build SystemsSpring Boot - Build Systems
+
+## What is the difference between DAO and Repository patterns?
+
+
+**DAO** is an abstraction of data persistence (*Data Access Object)*. **Repository** is an abstraction of a collection of objects.
+
+*DAO* would be considered closer to the database, often table-centric. *Repository* would be considered closer to the Domain, dealing only in Aggregate Roots. A *Repository* could be implemented using DAO's, but you wouldn't do the opposite.
+
+Also, a *Repository* is generally a narrower **interface**. It should be simply a collection of objects, with a `Get(id)`, `Find(ISpecification)`, `Add(Entity)`. A method like Update is appropriate on a *DAO*, but not a Repository - when using a Repository, changes to entities would usually be tracked by separate UnitOfWork.
+
+It does seem common to see implementations called a Repository that are really more of a DAO, and hence I think there is some confusion about the difference between them.
+
+[Read more](https://stackoverflow.com/a/8550228/6084866)

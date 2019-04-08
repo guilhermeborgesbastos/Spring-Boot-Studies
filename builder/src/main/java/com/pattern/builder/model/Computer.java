@@ -1,4 +1,4 @@
-package com.pattern.builder.models;
+package com.pattern.builder.model;
 
 public class Computer {
 
