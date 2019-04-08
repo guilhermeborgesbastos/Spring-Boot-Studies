@@ -5,6 +5,7 @@
 
 A generic repository for study purposes, with all the exercises from the https://www.tutorialspoint.com/spring_boot
 
-## Sumary
+## Summary
 
 - [Spring Boot - Tomcat Deployment](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/SpringBootServletInitializer) - Creating a WAR file and deploying the Spring Boot application in Tomcat web server.
+- [Spring Boot - Build Systems](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/BuildSystems) - Choosing a build system for Spring Boot project.
