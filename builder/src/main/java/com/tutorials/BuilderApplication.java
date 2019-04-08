@@ -1,4 +1,4 @@
-package com.pattern.builder;
+package com.tutorials;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pattern.builder.models.Computer;
+import com.tutorials.model.Computer;
 
 @SpringBootApplication
 @RestController
