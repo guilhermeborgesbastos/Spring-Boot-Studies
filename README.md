@@ -8,7 +8,7 @@ A generic repository for study purposes, with all the exercises from the https:/
 [Get back to the main Summary Page.](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies)
 
 
-# Spring Boot - Runners
+# Spring Boot - Application & Command Line Runners
 
 ## What is a Application Runner for Spring Boot?
 *Application Runner* and *Command Line Runner* **interfaces** lets you to execute the code after the Spring Boot application is started. You can use these interfaces to perform any actions immediately after the application has started. This chapter talks about them in detail.
@@ -59,7 +59,7 @@ The overriding *run()* method writes in the log info regarding:
 * **The command-line arguments sent in the application start**
 The parameter can be sent to Spring Boot via command line:
 ```
-java -jar target/command-line.jar this-is-a-non-option-arg --server.port=9090 --person.name=Guilherme --person.employer=QAT Global 
+java -jar target/command-line.jar this-is-a-non-option-arg --server.port=9090 --person.name=Guilherme --person.employer='QAT Global'
 ```
 In case of the existence of the `application.properties` file located in the `src/main/resources` folder, the default properties will be overridden by the ones sent in the command line. For example:
 ```
@@ -70,3 +70,42 @@ person.employer=Default Employer Parameter
 There is also non optional argument, in the example above is the `this-is-a-non-option-arg`, look at the Spring Boot terminal logging of this example:
 
 <img src="img/Application-Runner-Args-Output-Terminal.png" align="center" />
+
+Right after the application start the `run()` method is executed, in this example, reading parameters from the command line.
+
+## Injecting Arguments in the Controller layer
+
+It's also possible to inject via Dependency Injection the values for each property in the controller layer, look at the example below:
+```
+package com.gbastos.springboot.runner.controller;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloController {
+
+    @Value("${person.name}")
+    private String name;
+    
+
+    @Value("${person.employer}")
+    private String employer;
+
+    @GetMapping
+    public String hello(){
+        return "Hello, " + name + " from " + employer + "!";
+    }
+}
+```
+
+By executing the application seeting the following properties using the command line below:
+
+```
+java -jar target/command-line.jar --server.port=9090 --person.name='Bill Gates' --person.employer='Microsoft Corporation'
+```
+
+When accessing the `HelloController` via browser we will see:
+
+<img src="img/Application-Runner-Controller-Arg-Sharing.png" align="center" />
