@@ -9,9 +9,13 @@ public class HelloController {
 
     @Value("${person.name}")
     private String name;
+    
+
+    @Value("${person.employer}")
+    private String employer;
 
     @GetMapping
     public String hello(){
-        return "Hello, " + name + "!";
+        return "Hello, " + name + " from " + employer + "!";
     }
 }
