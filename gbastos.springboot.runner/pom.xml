@@ -34,7 +34,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.memorynotfound.springboot.Application</mainClass>
+                    <mainClass>com.gbastos.springboot.runner.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
