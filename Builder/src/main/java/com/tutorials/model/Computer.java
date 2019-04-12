@@ -1,4 +1,3 @@
-
 package com.tutorials.model;
 
 import org.springframework.stereotype.Component;

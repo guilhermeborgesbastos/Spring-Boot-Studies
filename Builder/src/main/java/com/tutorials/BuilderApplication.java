@@ -1,4 +1,3 @@
-
 package com.tutorials;
 
 import org.springframework.boot.SpringApplication;
