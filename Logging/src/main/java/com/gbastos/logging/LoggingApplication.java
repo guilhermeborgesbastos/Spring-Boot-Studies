@@ -28,13 +28,13 @@ public class LoggingApplication {
 		 
 		parentLogger.setLevel(Level.INFO);
 		 
-		Logger childlogger = 
+		Logger childLogger = 
 		  (ch.qos.logback.classic.Logger)LoggerFactory.getLogger("com.gbastos.logging.logback.tests");
 		 
 		parentLogger.warn("This message is logged because WARN > INFO.");
 		parentLogger.debug("This message is not logged because DEBUG < INFO.");
-		childlogger.info("INFO == INFO");
-		childlogger.debug("DEBUG < INFO");
+		childLogger.info("INFO == INFO");
+		childLogger.debug("DEBUG < INFO");
     }
     
     
