@@ -12,4 +12,5 @@ A generic repository for study purposes, with all the exercises from the https:/
 - [Spring Boot - Code Structure](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/CodeStructure) - Some best practices for the Layout of your Spring Boot project.
 - [Spring Boot - Dependency Injection, IoC, Beans and Bean Scopes](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/BeansAndDependencyInjection) - A simple example of how use Dependency Injection in Spring Boot, better explaining some important concepts around it.
 - [Spring Boot - Application Runner, Command Line Runner & Active Profiles](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/SpringBootRunners) - A simple example of how to use Application & Command Line Runners, injecting optional and mandatory properties (via command line and config file), in a Controller layer. Also, a pratical usage for the Spring Boot Profiles.
+- [Spring Boot - Logging & Logback Framework](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/Logging) - A simple example of how to use Logging and some features of the Logback Framework.
 
