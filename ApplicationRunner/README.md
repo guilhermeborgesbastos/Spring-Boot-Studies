@@ -1,4 +1,4 @@
-<img width="250" src="img/spring-by-pivotal.png" align="right" />
+<img width="250" src="../img/spring-by-pivotal.png" align="right" />
 
 # Spring Boot Studies [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 > This repository keeps evolving as I continue covering more functionalities and techniques from Spring boot application.
@@ -73,7 +73,7 @@ person.employer=Default Employer Parameter
 
 There is also non optional argument, in the example above is the `this-is-a-non-option-arg`, look at the Spring Boot terminal logging of this example:
 
-<img src="img/Application-Runner-Args-Output-Terminal.png" align="center" />
+<img src="../img/Application-Runner-Args-Output-Terminal.png" align="center" />
 
 Right after the application start the `run()` method is executed, in this example, reading parameters from the command line.
 
@@ -112,7 +112,7 @@ java -jar target/command-line.jar --server.port=9090 --person.name='Bill Gates' 
 
 When accessing the `HelloController` via browser we will see:
 
-<img src="img/Application-Runner-Controller-Arg-Sharing.png" align="center" />
+<img src="../img/Application-Runner-Controller-Arg-Sharing.png" align="center" />
 
 **Note** − If the property is not found while running the application, Spring Boot throws the **Illegal Argument exception** as Could not resolve placeholder 'spring.application.name' in value `${person.name}`.
 
