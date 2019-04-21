@@ -10,6 +10,20 @@ A generic repository for study purposes, with all the exercises from the https:/
 
 # Spring Boot - Exception Handling
 
+## Video Preview
+[![Watch the video](https://img.youtube.com/vi/vJ56dPV0Q0w/maxresdefault.jpg)](https://youtu.be/vJ56dPV0Q0w)
+
+**FYI** - *The README still not totally finished yet, updates are coming...*
+
+___
+
+## Flow
+
+<img src="img/spring-handler-exception.png" align="center">
+
+___
+
+
 Handling exceptions and errors in APIs and sending the proper response to the client is good for enterprise applications. In this chapter, we will learn how to handle exceptions in Spring Boot.
 
 Before proceeding with exception handling, let us gain an understanding on the following annotations.
@@ -23,7 +37,7 @@ The `@ControllerAdvice` is an annotation, to handle the exceptions globally. It 
 Developers noticed the application crashed in some cases. For example, when retrieving details of a non-existing user/product or creating a publication/comment with inappropriate content. The first approach was to include `@ExceptionHandler` methods in each controller, as follows.
 
 ```
-package com.tutorialspoint.demo.exception;
+package com.gbastos.ExceptionHandling.Exception;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
@@ -33,7 +47,7 @@ public class ProductExceptionController { }
 
 Define a class that extends the *RuntimeException* class.
 ```
-package com.tutorialspoint.demo.exception;
+package com.gbastos.ExceptionHandling.Exception;
 
 public class ProductNotfoundException extends RuntimeException {
    private static final long serialVersionUID = 1L;
@@ -59,7 +73,7 @@ public ResponseEntity<Object> updateProduct() {
 The complete code to handle the exception is given below. In this example, we used the `PUT` API to update the product. Here, while updating the product, if the product is not found, then return the response error message as *“Product not found”*. Note that the **ProductNotFoundException** exception class should extend the **RuntimeException**.
 
 ```
-package com.tutorialspoint.demo.exception;
+package com.gbastos.ExceptionHandling.Exception;
 
 public class ProductNotfoundException extends RuntimeException {
    private static final long serialVersionUID = 1L;
@@ -68,7 +82,7 @@ public class ProductNotfoundException extends RuntimeException {
 
 The Controller Advice class to handle the exception globally is given below. We can define any *Exception Handler *methods in this class file.
 ```
-package com.tutorialspoint.demo.exception;
+package com.gbastos.ExceptionHandling.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,7 +101,7 @@ public class ProductExceptionController {
 
 The Product Service API controller file is given below to update the Product. If the Product is not found, then it throws the **ProductNotFoundException** class.
 ```
-package com.tutorialspoint.demo.controller;
+package com.gbastos.ExceptionHandling.Controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -133,22 +147,22 @@ public class ProductServiceController {
 
 The code for main Spring Boot application class file is given below −
 ```
-package com.tutorialspoint.demo;
+package com.gbastos.ExceptionHandling;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class ExceptionHandlingApplication {
    public static void main(String[] args) {
-      SpringApplication.run(DemoApplication.class, args);
+      SpringApplication.run(ExceptionHandlingApplication.class, args);
    }
 }
 ```
 
 The code for POJO class for Product is given below −
 ```
-package com.tutorialspoint.demo.model;
+package com.gbastos.ExceptionHandling.Model;
 
 public class Product {
 
