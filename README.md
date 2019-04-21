@@ -10,6 +10,12 @@ A generic repository for study purposes, with all the exercises from the https:/
 
 # Spring Boot - Exception Handling
 
+## Video Preview
+[![Watch the video](https://img.youtube.com/vi/vJ56dPV0Q0w/maxresdefault.jpg)](https://youtu.be/vJ56dPV0Q0w)
+
+**FYI ** - *The README still not totally finished yet, updates are coming...*
+___
+
 Handling exceptions and errors in APIs and sending the proper response to the client is good for enterprise applications. In this chapter, we will learn how to handle exceptions in Spring Boot.
 
 Before proceeding with exception handling, let us gain an understanding on the following annotations.
