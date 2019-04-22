@@ -10,291 +10,152 @@ A generic repository for study purposes, with all the exercises from the https:/
 
 # Spring Boot - Exception Handling
 
-## Video Preview
-[![Watch the video](https://img.youtube.com/vi/vJ56dPV0Q0w/maxresdefault.jpg)](https://youtu.be/vJ56dPV0Q0w)
 
-**FYI** - *The README still not totally finished yet, updates are coming...*
+Handling errors correctly in APIs while providing meaningful error messages is a very desirable feature, as it can help the API client properly respond to issues. The default behavior tends to be returning stack traces that are hard to understand and ultimately useless for the API client. Partitioning the error information into fields also enables the API client to parse it and provide better error messages to the user. In this article, we will cover how to do proper error handling when building a REST API with *Spring Boot*.
+
+In this chapter, we will learn how to handle exceptions in Spring Boot. The video below presents an overview of a RESTful API handling generic and specific exceptions sending the proper response to the client. Take a look -
+
+## Video Preview
+[![Watch the video](img/Exception-Handler-Thumbnail.png)](https://youtu.be/vJ56dPV0Q0w)
 
 ___
 
 ## Flow
+
+The following schema represents how the Application present in this article works -
 
 <img src="img/spring-handler-exception.png" align="center">
 
 ___
 
 
-Handling exceptions and errors in APIs and sending the proper response to the client is good for enterprise applications. In this chapter, we will learn how to handle exceptions in Spring Boot.
+Before proceeding with the coding, let us gain an understanding of the following annotations.
 
-Before proceeding with exception handling, let us gain an understanding on the following annotations.
+## @RestController
 
-## Controller Advice
+The `@RestController` is a base annotation for classes that handle REST operations. [Read more](https://www.baeldung.com/spring-controller-vs-restcontroller).
 
-The `@ControllerAdvice` is an annotation, to handle the exceptions globally. It was first introduced in **Spring 3.2**. It allows you to handle exceptions across the whole application, not just to an individual controller. You can think of it as an interceptor of exceptions thrown by methods annotated with `@RequestMapping` or one of the [shortcuts](https://www.baeldung.com/spring-new-requestmapping-shortcuts).
+## @ExceptionHandler
 
-## Exception Handler in controllers
+The `@ExceptionHandler` is a Spring annotation that provides a mechanism to treat exceptions that are thrown during execution of handlers *(Controller operations)*. This annotation, if used on methods of controller classes, will serve as the entry point for handling exceptions thrown within this controller only. Altogether, the most common way is to use `@ExceptionHandler` on methods of `@ControllerAdvice` classes so that the exception handling will be applied globally or to a subset of controllers. [Read more](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/bind/annotation/ExceptionHandler.html)
 
-Developers noticed the application crashed in some cases. For example, when retrieving details of a non-existing user/product or creating a publication/comment with inappropriate content. The first approach was to include `@ExceptionHandler` methods in each controller, as follows.
+## @ControllerAdvice
+
+The `@ControllerAdvice` is an annotation, to handle the exceptions globally. It was first introduced in **Spring 3.2**. It allows you to handle exceptions across the whole application, not just to an individual controller. You can think of it as an interceptor of exceptions thrown by methods annotated with `@RequestMapping` or one of the [shortcuts](https://www.baeldung.com/spring-new-requestmapping-shortcuts). 
+
+In this way we can in just one place define how to treat such an exception and this handler will be called when the exception is thrown from classes that are covered by this `ControllerAdvice`. The subset of controllers affected can defined by using the following selectors on `@ControllerAdvice`: `annotations()`, `basePackageClasses()`, and `basePackages()`. If no selectors are provided, then the `ControllerAdvice` is applied globally to all controllers.
+
+In other words, by using `@ExceptionHandler` and `@ControllerAdvice`, we’ll be able to define an unique point for treating exceptions and wrapping them up in an `ApiError` object with better organization than the default *Spring Boot* error handling mechanism.
+
+## Exception Handler
+
+Developers noticed the application crashed in some cases. For example, when retrieving details of a non-existing *user/product* or creating a *publication/comment* with inappropriate content. 
+
+For overcoming this problem we can to create the class that will handle the exceptions. For simplicity, we are calling it `RestExceptionHandler` and it must extend from Spring Boot’s `ResponseEntityExceptionHandler`. We’ll be extending `ResponseEntityExceptionHandler` as it already provides some basic handling of *Spring MVC* exceptions, so we’ll be adding handlers for new exceptions while improving the existing ones.
+
+### Overriding Exceptions Handled In ResponseEntityExceptionHandler
+
+If you take a look into the source code of `ResponseEntityExceptionHandler`, you’ll see a lot of methods called `handle******()` like `handleHttpMessageNotReadable()` or `handleHttpMessageNotWritable()`. Let’s first see how can we extend `handleHttpMessageNotReadable()` to handle `HttpMessageNotReadableException` exceptions. We just have to override the method `handleHttpMessageNotReadable()` in our `RestExceptionHandler` class -
 
 ```
-package com.gbastos.ExceptionHandling.Exception;
-
-import org.springframework.web.bind.annotation.ControllerAdvice;
-
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class ProductExceptionController { }
-```
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-Define a class that extends the *RuntimeException* class.
-```
-package com.gbastos.ExceptionHandling.Exception;
+   @Override
+   protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+       String error = "Malformed JSON request";
+       return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, error, ex));
+   }
 
-public class ProductNotfoundException extends RuntimeException {
-   private static final long serialVersionUID = 1L;
+   private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
+       return new ResponseEntity<>(apiError, apiError.getStatus());
+   }
+
+   // Continue with the other exception handlers below...
+
+}
+```
+*See the complete file on [GitHub](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/blob/ExceptionHandling/ExceptionHandling/src/main/java/com/gbastos/ExceptionHandling/RestExceptionHandler.java)*
+
+We have declared that in case of a `HttpMessageNotReadableException` being thrown, the error message will be *“Malformed JSON request”* and the error will be encapsulated inside the `ApiError` object. Below we can see the answer of a REST call with this new method overridden -
+
+```
+{
+    "apiError": {
+        "status": "BAD_REQUEST",
+        "statusCode": 400,
+        "timestamp": "21-04-2019 11:37:51",
+        "message": "Malformed JSON request",
+        "debugMessage": "JSON parse error: Cannot deserialize value of type `java.lang.Boolean` from String \"bla bla bla\": only \"true\" or \"false\" recognized; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.lang.Boolean` from String \"bla bla bla\": only \"true\" or \"false\" recognized\n at [Source: (PushbackInputStream); line: 5, column: 12] (through reference chain: com.gbastos.ExceptionHandling.Model.Product[\"active\"])"
+    }
 }
 ```
 
-You can define the `@ExceptionHandler` method to handle the exceptions as shown. This method should be used for writing the Controller Advice class file.
-```
-@ExceptionHandler(value = ProductNotfoundException.class)
+## Custom Exception Handler
 
-public ResponseEntity<Object> exception(ProductNotfoundException exception) {
-}
-```
+Let's see how to create a method that handles an exception that is not yet declared inside Spring Boot’s `ResponseEntityExceptionHandler`.
 
-Now, use the code given below to throw the exception from the API.
-```
-@RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-public ResponseEntity<Object> updateProduct() { 
-   throw new ProductNotfoundException();
-}
-```
+A common scenario for a Spring application that handles database calls is to have a call to find a record by its ID using a repository class. But if we look into the `CrudRepository.findById()` method, we’ll see that it returns `null` if an object is not found. That means that if our service just calls this method and returns directly to the controller, we’ll get an `HTTP code 200 (OK)` even if the resource isn’t found. In fact, the proper approach is to return a `HTTP code 404 (NOT FOUND)` as specified in the [HTTP/1.1 spec](https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html) .
 
-The complete code to handle the exception is given below. In this example, we used the `PUT` API to update the product. Here, while updating the product, if the product is not found, then return the response error message as *“Product not found”*. Note that the **ProductNotFoundException** exception class should extend the **RuntimeException**.
+To handle this case, we’ll create a custom exception called `EntityNotFoundException`. This one is a custom created exception and different from `javax.persistence.EntityNotFoundException`, as it provides some constructors that ease the object creation, and one may choose to handle the `javax.persistence` exception differently.
+
+That said, let’s create an `ExceptionHandler` for this newly created `EntityNotFoundException` in our `RestExceptionHandler` class. To do that, create a method called `handleEntityNotFound()` and annotate it with `@ExceptionHandler`, passing the class object `EntityNotFoundException.class` to it. This signalizes Spring that every time `EntityNotFoundException` is thrown, Spring should call this method to handle it. When annotating a method with `@ExceptionHandler`, it will accept a wide range of auto-injected parameters like `WebRequest`, `Locale` and others as described here. We’ll just provide the exception `EntityNotFoundException` itself as a parameter for this `handleEntityNotFound` method.
 
 ```
-package com.gbastos.ExceptionHandling.Exception;
-
-public class ProductNotfoundException extends RuntimeException {
-   private static final long serialVersionUID = 1L;
-}
-```
-
-The Controller Advice class to handle the exception globally is given below. We can define any *Exception Handler *methods in this class file.
-```
-package com.gbastos.ExceptionHandling.Exception;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
-public class ProductExceptionController {
-
-   @ExceptionHandler(value = ProductNotfoundException.class)
-   public ResponseEntity<Object> exception(ProductNotfoundException exception) {
-      return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+  
+   // Continue with other exception handlers here...
+  
+   @ExceptionHandler(EntityNotFoundException.class)
+   protected ResponseEntity<Object> handleEntityNotFound(
+           EntityNotFoundException ex) {
+       ApiError apiError = new ApiError(NOT_FOUND);
+       apiError.setMessage(ex.getMessage());
+       
+       return buildResponseEntity(apiError);
    }
 }
 ```
 
-The Product Service API controller file is given below to update the Product. If the Product is not found, then it throws the **ProductNotFoundException** class.
+*See the complete file on [GitHub](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/blob/ExceptionHandling/ExceptionHandling/src/main/java/com/gbastos/ExceptionHandling/RestExceptionHandler.java)*
+
+Great! In the `handleEntityNotFound()` method, we are setting the HTTP status code to **NOT_FOUND** and using the new exception message. Here is what the response for the `GET /products/2` endpoint looks like now -
+
 ```
-package com.gbastos.ExceptionHandling.Controller;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tutorialspoint.demo.exception.ProductNotfoundException;
-import com.tutorialspoint.demo.model.Product;
-
-@RestController
-public class ProductServiceController {
-
-   private static Map<String, Product> productRepo = new HashMap<>();
-   
-   static {
-      Product honey = new Product();
-      honey.setId("1");
-      honey.setName("Honey");
-      productRepo.put(honey.getId(), honey);
-      
-      Product almond = new Product();
-      almond.setId("2");
-      almond.setName("Almond");
-      productRepo.put(almond.getId(), almond);
-   }
-   
-   @RequestMapping(value = "/products/{id}", method = RequestMethod.PUT)
-   public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Product product) { 
-      if(!productRepo.containsKey(id)) throw new ProductNotfoundException();
-      productRepo.remove(id);
-      product.setId(id);
-      productRepo.put(id, product);
-      return new ResponseEntity<>("Product is updated successfully", HttpStatus.OK);
-   }
+{
+    "apiError": {
+        "status": "NOT_FOUND",
+        "statusCode": 404,
+        "timestamp": "21-04-2019 11:55:22",
+        "message": "Product was not found for parameters {id=2}"
+    }
 }
 ```
 
-The code for main Spring Boot application class file is given below −
-```
-package com.gbastos.ExceptionHandling;
+## Final Endpoints
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+Here’s a summary of endpoints implemented in that application -
 
-@SpringBootApplication
-public class ExceptionHandlingApplication {
-   public static void main(String[] args) {
-      SpringApplication.run(ExceptionHandlingApplication.class, args);
-   }
-}
-```
+| Route  | Details |
+| ------------- | ------------- |
+| `GET /products/{Id}`  | Retrieve data about a Product and throws an exception if not found.  |
+| `GET /noexception/{id}`  | Retrieve data about a Product and throws an exception if not found.  |
+| `GET /products/{id}`  | it also gets data about a Product, except it doesn’t throw an exception in case that the Entity is not found. |
+| `POST /products/`  | Creates a new Product and throws exceptions if invalid properties are sent by the Client or the Entity already exists in the Database.  |
+| `PUT /products/{id}`  | Edits a  Product and throws exceptions if invalid properties are sent by the Client or the Entity is not found. |
+| `DELETE /products/{id}`  | Deletes a Product and throws exceptions if invalid properties are sent by the Client or the Entity is not found. |
 
-The code for POJO class for Product is given below −
-```
-package com.gbastos.ExceptionHandling.Model;
+[Download](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/blob/ExceptionHandling/ExceptionHandling.postman_collection.json) here the POSTMAN export route file.
 
-public class Product {
+## Additional Sources
 
-   private String id;
-   private String name;
+Here are some additional resources that helped in the construction of this article:
 
-   public String getId() {
-      return id;
-   }
-   public void setId(String id) {
-      this.id = id;
-   }
-   public String getName() {
-      return name;
-   }
-   public void setName(String name) {
-      this.name = name;
-   }
-}
-```
-
-The code for Maven build – `pom.xml` is shown below −
-```
-<?xml version = "1.0" encoding = "UTF-8"?>
-<project xmlns = "http://maven.apache.org/POM/4.0.0" 
-   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation = "http://maven.apache.org/POM/4.0.0 
-   http://maven.apache.org/xsd/maven-4.0.0.xsd">
-   
-   <modelVersion>4.0.0</modelVersion>
-   <groupId>com.tutorialspoint</groupId>
-   <artifactId>demo</artifactId>
-   <version>0.0.1-SNAPSHOT</version>
-   <packaging>jar</packaging>
-   <name>demo</name>
-   <description>Demo project for Spring Boot</description>
-
-   <parent>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-parent</artifactId>
-      <version>1.5.8.RELEASE</version>
-      <relativePath/> 
-   </parent>
-
-   <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <java.version>1.8</java.version>
-   </properties>
-
-   <dependencies>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-web</artifactId>
-      </dependency>
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-starter-test</artifactId>
-         <scope>test</scope>
-      </dependency>
-   </dependencies>
-
-   <build>
-      <plugins>
-         <plugin>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-maven-plugin</artifactId>
-         </plugin>
-      </plugins>
-   </build>
-   
-</project>
-```
-
-The code for **Gradle Build – build.gradle** is given below −
-```
-buildscript {
-   ext {
-      springBootVersion = '1.5.8.RELEASE'
-   }
-   repositories {
-      mavenCentral()
-   }
-   dependencies {
-      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-   }
-}
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-
-group = 'com.tutorialspoint'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-repositories {
-   mavenCentral()
-}
-
-dependencies {
-   compile('org.springframework.boot:spring-boot-starter-web')
-   testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-```
-
-You can create an executable JAR file, and run the Spring Boot application by using the Maven or Gradle commands −
-
-For Maven, you can use the following command −
-```
-mvn clean install
-```
-
-After “BUILD SUCCESS”, you can find the JAR file under the target directory.
-
-For Gradle, you can use the following command −
-```
-gradle clean build
-```
-
-After “BUILD SUCCESSFUL”, you can find the JAR file under the build/libs directory.
-
-You can run the JAR file by using the following command −
-```
-java –jar <JARFILE>
-```
-
-This will start the application on the Tomcat port 8080 as shown below −
-
---IMAGE--
-
-Now hit the below URL in POSTMAN application and you can see the output as shown below −
-
-## Endpoints
-
-Update URL: http://localhost:8080/products/3
+* Baeldung - [Error handling for REST with Spring](ps://www.baeldung.com/exception-handling-for-rest-with-spring)
+* Baeldung - [Spring @RequestMapping New Shortcut Annotations](https://www.baeldung.com/spring-new-requestmapping-shortcuts)
+* Baeldung -  [Java Bean Validation Basics](https://www.baeldung.com/javax-validation)
+* Baeldung -  [Using Lombok’s @Builder Annotation](https://www.baeldung.com/lombok-builder)
+* TopTal - [Spring Boot REST API Error Handling](https://www.toptal.com/java/spring-boot-rest-api-error-handling)
