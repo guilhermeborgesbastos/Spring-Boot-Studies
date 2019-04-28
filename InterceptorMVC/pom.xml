@@ -43,6 +43,11 @@
 		    <artifactId>spring-web</artifactId>
 		</dependency>
 		
+		<dependency>
+		    <groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
