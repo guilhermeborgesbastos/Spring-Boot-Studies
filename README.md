@@ -34,8 +34,8 @@ ___
 
 In order to better understand it, we are going to exercise the Interceptor concepts in three different applications, they are:
 
-|  Source    | Interceptor    | Implementation Details |
+|  Source  Code  | Interceptor    | Implementation Details |
 | --------|---------|-------|
-| [Read more](http://google.com)   | LoggerInterceptor   |  In this example, we will use Interceptor focusing on logging in a web application.     |
-| [Read more](http://google.com)  | TimerInterceptor |  In this example, we will use Interceptor for tracking how long the Request will take in a web application.   |
-| [Read more](http://google.com)  | UserInterceptor | It's a more advanced example using interceptors emulating a session timeout logic by setting custom counters and tracking sessions manually.  |
+| [Read more](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/LoggerInterceptor)   | LoggerInterceptor   |  In this example, we will use Interceptor focusing on logging in a web application.     |
+| [Read more](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/TimerInterceptor)  | TimerInterceptor |  In this example, we will use Interceptor for tracking how long the Request will take in a web application.   |
+| [Read more](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/UserInterceptor)  | UserInterceptor | It's a more advanced example using interceptors emulating a session timeout logic by setting custom counters and tracking sessions manually.  |
