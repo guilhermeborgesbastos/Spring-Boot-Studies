@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.gbastos.InterceptorMVC.Interceptors.LoggerInterceptor;
+import com.gbastos.InterceptorMVC.Interceptors.TimerInterceptor;
 
 /**
  * The Class MvcConfig adds our Interceptors into Spring configuration, we need to override
@@ -36,5 +37,6 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new LoggerInterceptor());
+        registry.addInterceptor(new TimerInterceptor());
     }
 }
