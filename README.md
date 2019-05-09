@@ -39,3 +39,5 @@ In order to better understand it, we are going to exercise the Interceptor conce
 | [Read more](http://google.com)   | LoggerInterceptor   |  In this example, we will use Interceptor focusing on logging in a web application.     |
 | [Read more](http://google.com)  | TimerInterceptor |  In this example, we will use Interceptor for tracking how long the Request will take in a web application.   |
 | [Read more](http://google.com)  | UserInterceptor | It's a more advanced example using interceptors emulating a session timeout logic by setting custom counters and tracking sessions manually.  |
+
+## TO BE CONTINUED....
