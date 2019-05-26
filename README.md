@@ -10,6 +10,8 @@ A generic repository for study purposes, with all the exercises from the https:/
 
 # Spring Boot - Building RESTful Web Services
 
+> ### For a detailed explanation about REST Concepts & Fundamentals access [this link](https://github.com/guilhermeborgesbastos/Spring-Boot-Studies/tree/RESTArchitecture).
+
 *Spring Boot* provides a very good support to building **RESTful Web Services** for enterprise applications. This chapter will explain in detail about building RESTful web services using Spring Boot.
 
 **Note** − For building a RESTful Web Services, we need to add the *Spring Boot Starter Web* dependency into the build configuration file.
@@ -18,7 +20,7 @@ If you are a Maven user, use the following code to add the below dependency in y
 ```
 <dependency>
    <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-web</artifactId>    
+   <artifactId>spring-boot-starter-web</artifactId> 
 </dependency>
 ```
 
