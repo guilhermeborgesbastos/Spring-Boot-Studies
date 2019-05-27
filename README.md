@@ -248,28 +248,27 @@ It provides ease of navigation through a resource and its available actions. Thi
 
 To understand it better let’s look at the below response of retrieve user with `ID: 123` from the server:
 
-```
+``` json
 {
     "name": "Guilherme Borges Bastos",
     "links": [{
-            "rel": "self",
-            "href": "http://localhost:8080/users/123"
-        },
-        {
-            "rel": "posts",
-            "href": "http://localhost:8080/users/123/posts"
-        },
-        {
-            "rel": "address",
-            "href": "http://localhost:8080/users/123/address"
-        }
-    ]
+		"rel": "self",
+		"href": "http://localhost:8080/users/123"
+	},
+	{
+		"rel": "posts",
+		"href": "http://localhost:8080/users/123/posts"
+	},
+	{
+		"rel": "address",
+		"href": "http://localhost:8080/users/123/address"
+	}]
 }
 ```
 
 Sometimes it’s easier to skip the links format, and specify links as fields of a resource as below:
 
-```
+``` json
 {
     "name": "Guilherme Borges Bastos",
     "self": "http://localhost:8080/users/123",
