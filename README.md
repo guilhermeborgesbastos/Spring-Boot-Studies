@@ -35,7 +35,7 @@ RESTful services often use HTTP protocol verbs, not a coincidence because the pe
 
 In the `RESTful` there is a URL pattern, see the example below:
 
-* **Berfore**
+* **Before**
 	* `http://example.com`/`UpdateEmployee.aspx`
 	* The URL represents a directory structure and an specific file;
 	
@@ -252,17 +252,17 @@ To understand it better let’s look at the below response of retrieve user with
 {
     "name": "Guilherme Borges Bastos",
     "links": [{
-		"rel": "self",
-		"href": "http://localhost:8080/users/123"
-	},
-	{
-		"rel": "posts",
-		"href": "http://localhost:8080/users/123/posts"
-	},
-	{
-		"rel": "address",
-		"href": "http://localhost:8080/users/123/address"
-	}]
+        "rel": "self",
+        "href": "http://localhost:8080/users/123"
+    },
+    {
+        "rel": "posts",
+        "href": "http://localhost:8080/users/123/posts"
+    },
+    {
+        "rel": "address",
+        "href": "http://localhost:8080/users/123/address"
+    }]
 }
 ```
 
