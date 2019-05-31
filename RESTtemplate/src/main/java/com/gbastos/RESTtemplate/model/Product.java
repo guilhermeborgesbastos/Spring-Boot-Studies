@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Model;
+package com.gbastos.RESTtemplate.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

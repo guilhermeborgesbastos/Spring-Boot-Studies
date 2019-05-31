@@ -1,8 +1,8 @@
-package com.gbastos.RESTtemplate.Repository;
+package com.gbastos.RESTtemplate.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.gbastos.RESTtemplate.Model.Product;
+import com.gbastos.RESTtemplate.model.Product;
 
 /**
  * The ProductRepository class that extends the CrudRepository witch is a Spring Data interface for generic CRUD operations

@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Data;
+package com.gbastos.RESTtemplate.data;
 
 import java.util.TimeZone;
 

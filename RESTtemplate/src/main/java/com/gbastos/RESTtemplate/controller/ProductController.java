@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Controller;
+package com.gbastos.RESTtemplate.controller;
 
 import java.util.List;
 import javax.validation.Valid;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.gbastos.RESTtemplate.Collection.ProductCollection;
-import com.gbastos.RESTtemplate.Exception.EntityNotFoundException;
-import com.gbastos.RESTtemplate.Model.Product;
-import com.gbastos.RESTtemplate.Service.ProductService;
+import com.gbastos.RESTtemplate.collection.ProductCollection;
+import com.gbastos.RESTtemplate.exception.EntityNotFoundException;
+import com.gbastos.RESTtemplate.model.Product;
+import com.gbastos.RESTtemplate.service.ProductService;
 
 /**
  * The Class ProductServiceController it is a simple sample of a RESTful Web Service used to explain the concept

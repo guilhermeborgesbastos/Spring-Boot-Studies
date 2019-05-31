@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Collection;
+package com.gbastos.RESTtemplate.collection;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;

@@ -23,7 +23,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import com.gbastos.RESTtemplate.Exception.EntityNotFoundException;
+import com.gbastos.RESTtemplate.exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 /**

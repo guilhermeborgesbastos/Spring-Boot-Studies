@@ -1,8 +1,8 @@
-package com.gbastos.RESTtemplate.Data;
+package com.gbastos.RESTtemplate.data;
 
 import org.springframework.stereotype.Component;
-import com.gbastos.RESTtemplate.Model.ProductBuilderObject;
-import com.gbastos.RESTtemplate.Repository.ProductRepository;
+import com.gbastos.RESTtemplate.model.ProductBuilderObject;
+import com.gbastos.RESTtemplate.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 
 /**

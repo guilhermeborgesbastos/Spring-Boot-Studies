@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Exception;
+package com.gbastos.RESTtemplate.exception;
 
 import java.util.HashMap;
 import java.util.Map;

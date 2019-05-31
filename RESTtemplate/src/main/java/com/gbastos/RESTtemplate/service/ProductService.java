@@ -1,4 +1,4 @@
-package com.gbastos.RESTtemplate.Service;
+package com.gbastos.RESTtemplate.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +7,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import com.gbastos.RESTtemplate.Collection.ProductCollection;
-import com.gbastos.RESTtemplate.Exception.EntityNotFoundException;
-import com.gbastos.RESTtemplate.Model.Product;
-import com.gbastos.RESTtemplate.Repository.ProductRepository;
+import com.gbastos.RESTtemplate.collection.ProductCollection;
+import com.gbastos.RESTtemplate.exception.EntityNotFoundException;
+import com.gbastos.RESTtemplate.model.Product;
+import com.gbastos.RESTtemplate.repository.ProductRepository;
 
 @Service
 public class ProductService {
