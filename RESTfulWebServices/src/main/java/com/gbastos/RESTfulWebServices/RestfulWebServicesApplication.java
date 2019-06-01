@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ResTfulWebServicesApplication {
+public class RestfulWebServicesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ResTfulWebServicesApplication.class, args);
+		SpringApplication.run(RestfulWebServicesApplication.class, args);
 	}
 
 }
