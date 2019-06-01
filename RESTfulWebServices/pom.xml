@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.gbastos</groupId>
 	<artifactId>RESTfulWebServices</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>RESTfulWebServices</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Demo project for Spring Boot RESTfulWebServices</description>
 
 	<properties>
 		<java.version>1.8</java.version>
