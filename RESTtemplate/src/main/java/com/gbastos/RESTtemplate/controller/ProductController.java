@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,18 +22,18 @@ import com.gbastos.RESTtemplate.service.ProductService;
 
 /**
  * The Class ProductServiceController it is a simple sample of a RESTful Web Service used to explain the concept
- * and practice of how to handle Exceptions on Spring Boot.
+ * and practice of how to consume external API via RestTemplate on Spring Boot.
  */
-@RestController
+@Controller
 @RequestMapping("/products")
 public class ProductController {
-
+  
   @Autowired
   private ProductService productService;
 
   @GetMapping(value = "/{id}")
   public Product retrieve(@PathVariable("id") Long id) throws EntityNotFoundException {
-    return productService.findById(id).get();
+    return productService.findById(id);
   }
 
   @GetMapping(value = "/collection")
@@ -42,12 +43,7 @@ public class ProductController {
 
   @GetMapping(value = "/params")
   public Product retrieveRequestParam(@RequestParam(Product.FieldName.ID) Long id) throws EntityNotFoundException {
-    return productService.findById(id).get();
-  }
-
-  @GetMapping(value = "/noexception/{id}")
-  public Product retrieveNoException(@PathVariable(Product.FieldName.ID) Long id) throws EntityNotFoundException {
-    return productService.findByIdNoException(id).get();
+    return productService.findById(id);
   }
 
   @PostMapping
