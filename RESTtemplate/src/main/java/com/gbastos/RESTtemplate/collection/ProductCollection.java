@@ -21,4 +21,10 @@ public class ProductCollection {
   public void setProductsIds(List<Long> productsIds) {
     this.productsIds = productsIds;
   }
+  
+  public static final class FieldName {
+    public static final String PRODUCT_IDS = "productsIds";
+
+    private FieldName() {}
+  }
 }
