@@ -1,14 +1,9 @@
 package com.gbastos.RESTtemplate.service;
 
 import java.util.Arrays;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import com.gbastos.RESTtemplate.collection.ProductCollection;
-import com.gbastos.RESTtemplate.collection.ProductList;
 import com.gbastos.RESTtemplate.exception.EntityNotFoundException;
 import com.gbastos.RESTtemplate.handler.RestTemplateResponseErrorHandler;
 import com.gbastos.RESTtemplate.model.Product;
@@ -19,6 +14,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 
 @Service
@@ -28,14 +25,31 @@ public class ProductService {
   static final String URL_SEP = "/";
 
   private RestTemplate restTemplate;
+  
+  /**
+   * Gets the client HTTP request factory configuring the RestTemplate to time out by simply using
+   * ClientHttpRequestFactory.
+   *
+   * @return the client HTTP request factory
+   */
+  private ClientHttpRequestFactory getClientHttpRequestFactory() {
+
+    int timeout = 5000;
+    HttpComponentsClientHttpRequestFactory clientHttpRequestFactory =
+        new HttpComponentsClientHttpRequestFactory();
+    clientHttpRequestFactory.setConnectTimeout(timeout);
+
+    return clientHttpRequestFactory;
+  }
 
   @Autowired
   public ProductService(RestTemplateBuilder restTemplateBuilder) {
     restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
+    restTemplate.setRequestFactory(getClientHttpRequestFactory());
   }
 
   /**
-   * Find product by ID, throwing an exception in case that the Entity is not found.
+   * Finds product by ID, throwing an exception in case that the Entity is not found.
    *
    * @param id
    * @return the optional
@@ -50,34 +64,27 @@ public class ProductService {
   }
 
   /**
-   * Create a new product, throwing an exception in case that the Entity is already found in the
+   * Creates a new product, throwing an exception in case that the Entity is already found in the
    * Database.
    *
    * @param product
    * @return the Product object
    */
   public Product create(Product product) {
+    
+    final HttpHeaders headers = new HttpHeaders();
+    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-    MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-    map.add(Product.FieldName.NAME, product.getName());
-    map.add(Product.FieldName.DESCRIPTION, product.getDescription());
-    map.add(Product.FieldName.WEIGHT, product.getWeight());
-    map.add(Product.FieldName.ACTIVE, product.getActive());
-
-    HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(map, headers);
+    final HttpEntity<Product> requestEntity = new HttpEntity<Product>(product, headers);
 
     ResponseEntity<Product> response =
-        restTemplate.postForEntity(EMP_URL_PREFIX, request, Product.class);
+        restTemplate.exchange(EMP_URL_PREFIX, HttpMethod.POST, requestEntity, Product.class);
 
     return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
   }
 
-
   /**
-   * Delete the product by ID, throwing an exception in case that the Entity is not found.
+   * Deletes the product by ID, throwing an exception in case that the Entity is not found.
    *
    * @param id
    * @throws EntityNotFoundException the entity not found exception
@@ -89,7 +96,7 @@ public class ProductService {
   }
 
   /**
-   * Update the product by ID, throwing an exception in case that the Entity is not found or in case
+   * Updates the product by ID, throwing an exception in case that the Entity is not found or in case
    * of invalid parameters coming from the Client.
    *
    * @param id
@@ -106,31 +113,9 @@ public class ProductService {
 
     final String entityUrl = EMP_URL_PREFIX + "/" + id;
 
-    return restTemplate.exchange(entityUrl, HttpMethod.PUT, requestEntity, Product.class).getBody();
+    ResponseEntity<Product> response =
+        restTemplate.exchange(entityUrl, HttpMethod.PUT, requestEntity, Product.class);
+
+    return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
   }
-
-  /**
-   * Retrieve multiple Entities based on a collection of Product's IDs, throwing an exception in
-   * case that the Entity is not found.
-   *
-   * @param productCollection the list of product IDs
-   * @return the list of Product
-   * @throws EntityNotFoundException the entity not found exception
-   */
-  public List<Product> retrieveCollection(ProductCollection productCollection)
-      throws EntityNotFoundException {
-
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-    MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<>();
-    bodyMap.add(ProductCollection.FieldName.PRODUCT_IDS, productCollection.getProductsIds());
-
-    final String entityUrl = EMP_URL_PREFIX + URL_SEP + "collection";
-
-    ProductList response = restTemplate.getForObject(entityUrl, ProductList.class, bodyMap);
-
-    return response.getProducts();
-  }
-
 }
