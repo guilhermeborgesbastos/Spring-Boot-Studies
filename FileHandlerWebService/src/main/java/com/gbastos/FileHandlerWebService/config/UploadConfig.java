@@ -11,10 +11,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 
+/**
+ * The Class UploadConfiguration is in charge of configuring the Multipart properties such as 'Max
+ * file size', 'Multipart Location', etc...
+ */
 @Configuration
-public class UploadConfiguration {
+public class UploadConfig {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UploadConfiguration.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UploadConfig.class);
 
     @Value("${multipart.file-size-threshold:-1}")
     private int maxInMemorySize;
@@ -25,23 +29,7 @@ public class UploadConfiguration {
     @Value("${multipart.location}")
     private String uploadTempDir;
 
-    @Bean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)
-    public CommonsMultipartResolver multipartResolver() {
-        final CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-        if (StringUtils.isNotBlank(uploadTempDir)) {
-            try {
-                commonsMultipartResolver.setUploadTempDir(new FileSystemResource(uploadTempDir));
-            }
-            catch (IOException e) {
-                LOGGER.warn(String.format("Illegal or not existing folder %s (temporary upload directory)!", uploadTempDir), e);
-            }
-        }
-        commonsMultipartResolver.setMaxUploadSize(parseSize(uploadMaxFileSize));
-        commonsMultipartResolver.setMaxInMemorySize(maxInMemorySize);
-        return commonsMultipartResolver;
-    }
-  
-    long parseSize(String size) {
+    private Long parseSize(String size) {
         size = size.toUpperCase();
         if (size.endsWith("KB")) {
             return Long.valueOf(size.substring(0, size.length() - 2)) * 1024;
@@ -50,5 +38,25 @@ public class UploadConfiguration {
             return Long.valueOf(size.substring(0, size.length() - 2)) * 1024 * 1024;
         }
         return Long.valueOf(size);
+    }
+
+    @Bean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)
+    public CommonsMultipartResolver multipartResolver() {
+      
+        final CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+        
+        if (StringUtils.isNotBlank(uploadTempDir)) {
+            try {
+                commonsMultipartResolver.setUploadTempDir(new FileSystemResource(uploadTempDir));
+            }
+            catch (IOException e) {
+                LOG.warn(String.format("Illegal or not existing folder %s (temporary upload directory)!", uploadTempDir), e);
+            }
+        }
+        
+        commonsMultipartResolver.setMaxUploadSize(parseSize(uploadMaxFileSize));
+        commonsMultipartResolver.setMaxInMemorySize(maxInMemorySize);
+        
+        return commonsMultipartResolver;
     }
 }
