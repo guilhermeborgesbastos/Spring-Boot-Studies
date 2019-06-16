@@ -69,26 +69,26 @@
 					<div id="multiple-files" class="tab-pane fade">
 						<h3>Enter The Files to Upload (Multiple files)</h3>
 						<p>Some content in menu 1.</p>
-						
+
 						<div class="container">
-						
+
 				  			<div class="jumbotron">
-				  			
+
 								<form:form method="POST" action="/upload/uploadMultiFile" enctype="multipart/form-data">
-									
+
 									 <div class="form-group">
 											<label for="files">Select a file to upload</label>
 											<input type="file" name="files" />
 									 </div>
 									 <div class="form-group">
 											<label for="files">Select a file to upload</label>
-											<input type="files" name="files" />
+											<input type="file" name="files" />
 									 </div>
 									 <div class="form-group">
 											<label for="files">Select a file to upload</label>
-											<input type="files" name="files" />
+											<input type="file" name="files" />
 									 </div>
-									 
+
 									 <button type="submit" class="btn btn-default">Submit</button>
 									 
 								</form:form>
@@ -109,24 +109,21 @@
 						
 								<form:form method="POST" action="/upload/uploadFileWithAdditionalData" enctype="multipart/form-data">
 								
-									<table>
-										<tr>
-											<td>Name</td>
-											<td><input type="text" name="name" /></td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td><input type="text" name="email" /></td>
-										</tr>
-										<tr>
-											<td>Select a file to upload</td>
-											<td><input type="file" name="file" /></td>
-										</tr>
-										<tr>
-											<td><input type="submit" value="Submit" /></td>
-										</tr>
-									</table>
-								
+									    <div class="form-group">
+											<label for="name">Name:</label>
+											<input type="text" name="name" />
+										</div>
+										<div class="form-group">
+											<label for="email">Email</label>
+											<input type="text" name="email" />
+										</div>
+										<div class="form-group">
+											<label for="file">Select a file to upload</label>
+											<input type="file" name="file" />
+										</div>
+
+									 	<button type="submit" class="btn btn-default">Submit</button>
+
 								</form:form>
 								
 							</div>
@@ -147,40 +144,37 @@
 						
 								<form:form method="POST" action="/upload/uploadFileModelAttribute" enctype="multipart/form-data">
 								
-									<table>
-										<tr>
-											<td>Name</td>
-											<td><input type="text" name="name" /></td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td><input type="text" name="email" /></td>
-										</tr>
-										<tr>
-											<td>Select a file to upload</td>
-											<td><input type="file" name="file" /></td>
-										</tr>
-										<tr>
-											<td><input type="submit" value="Submit" /></td>
-										</tr>
-									</table>
-								
+									 	<div class="form-group">
+											<label for="name">Name</label>
+											<input type="text" name="name" />
+										</div>
+										 <div class="form-group">
+											<label for="email">Email</label>
+											<input type="text" name="email" />
+										</div>
+										 <div class="form-group">
+											<label for="file">Select a file to upload</label>
+											<input type="file" name="file" />
+										</div>
+
+									 	<button type="submit" class="btn btn-default">Submit</button>
+
 								</form:form>
-							
+
 							</div>
-							
+
 						</div>
-						
+
 					</div>
-					
+
 				</div>
-			
+
 			</div>
-			
+
 			<div class="col-sm-3"></div>
-		
+
 		</div>
-	
+
 	</body>
 
 </html>
