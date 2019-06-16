@@ -1,20 +1,31 @@
 package com.gbastos.FileHandlerWebService.config;
 
+import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import com.gbastos.FileHandlerWebService.controller.FileUploadController;
 
 @EnableWebMvc
 @Configuration
 @ComponentScan("com.gbastos.FileHandlerWebService")
 public class WebConfig implements WebMvcConfigurer {
+  
+  private static final Logger LOG = LoggerFactory.getLogger(WebConfig.class);
 
+  @Value("${static.path}")
+  private String staticPath;
+  
   @Bean
   public ViewResolver internalResourceViewResolver() {
       InternalResourceViewResolver bean = new InternalResourceViewResolver();
@@ -29,5 +40,14 @@ public class WebConfig implements WebMvcConfigurer {
       registry
         .addResourceHandler("/webjars/**")
         .addResourceLocations("/webjars/");
-  }
+      
+      if(staticPath != null) {
+        
+        LOG.info("Serving static content from: " + staticPath);
+        
+        registry
+          .addResourceHandler("/**")
+          .addResourceLocations("file:" + staticPath);
+      }
+  }  
 }
