@@ -28,7 +28,7 @@ public class FileUploadController {
   @Autowired
   private FileUploadService fileUploadService;
 
-  @GetMapping(value = "/fileUpload")
+  @GetMapping(value = "/")
   public String displayForm() {
     return "fileUploadForm";
   }
@@ -43,6 +43,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("file", file);
+    modelMap.addAttribute("viewMode", "uploadFile");
     return "fileUploadView";
   }
 
@@ -57,6 +58,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("files", files);
+    modelMap.addAttribute("viewMode", "uploadMultiFile");
     return "fileUploadView";
   }
 
@@ -73,6 +75,7 @@ public class FileUploadController {
     modelMap.addAttribute("name", name);
     modelMap.addAttribute("email", email);
     modelMap.addAttribute("file", file);
+    modelMap.addAttribute("viewMode", "uploadFileWithAdditionalData");
     
     return "fileUploadView";
   }
@@ -88,6 +91,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("formDataWithFile", formDataWithFile);
+    modelMap.addAttribute("viewMode", "uploadFileModelAttribute");
     return "fileUploadView";
   }
 }

@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+
 <html>
 	<head>
-        <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
-        <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+		<spring:url value="/main.css" var="mainCss" />
+		<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 		<title>File Upload Example</title>
-        <link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${mainCss}"/>
 	</head>
 	
 	<body>
@@ -40,13 +44,13 @@
 				<div class="tab-content">
 				
 					<div id="single-file" class="tab-pane fade in active">
-					
-						<h3>Enter The File to Upload (Single file)</h3>
 
 						<div class="container">
-				
-				  			<div class="jumbotron">
 							
+							<div class="jumbotron">
+								
+								<h3>Enter The File to Upload <i>(Single file)</i></h3>
+
 								<form:form method="POST" action="/upload/uploadFile" enctype="multipart/form-data">
 									
 									 <div class="form-group">
@@ -56,7 +60,7 @@
 									 
 									 </div>
 									 
-									 <button type="submit" class="btn btn-default">Submit</button>
+									 <button type="submit" class="btn btn-primary">Submit</button>
 									
 								</form:form>
 								
@@ -67,12 +71,12 @@
 					</div>
 					
 					<div id="multiple-files" class="tab-pane fade">
-						<h3>Enter The Files to Upload (Multiple files)</h3>
-						<p>Some content in menu 1.</p>
-
+						
 						<div class="container">
+							
+							<div class="jumbotron">
 
-				  			<div class="jumbotron">
+								<h3>Enter The Files to Upload <i>(Multiple files)</i></h3>
 
 								<form:form method="POST" action="/upload/uploadMultiFile" enctype="multipart/form-data">
 
@@ -89,7 +93,7 @@
 											<input type="file" name="files" />
 									 </div>
 
-									 <button type="submit" class="btn btn-default">Submit</button>
+									 <button type="submit" class="btn btn-primary">Submit</button>
 									 
 								</form:form>
 							
@@ -100,13 +104,13 @@
 					</div>
 					
 					<div id="multipart-form-data-request-param" class="tab-pane fade">
-						<h3>Fill the Form and Select a File (<code>@RequestParam</code>)</h3>
-						<p>Some content in menu 2.</p>
-		
+						
 						<div class="container">
-						
-				  			<div class="jumbotron">
-						
+							
+							<div class="jumbotron">
+								
+								<h3>Fill the Form and Select a File (<code>@RequestParam</code>)</h3>
+
 								<form:form method="POST" action="/upload/uploadFileWithAdditionalData" enctype="multipart/form-data">
 								
 									    <div class="form-group">
@@ -114,7 +118,7 @@
 											<input type="text" name="name" />
 										</div>
 										<div class="form-group">
-											<label for="email">Email</label>
+											<label for="email">Email:</label>
 											<input type="text" name="email" />
 										</div>
 										<div class="form-group">
@@ -122,7 +126,7 @@
 											<input type="file" name="file" />
 										</div>
 
-									 	<button type="submit" class="btn btn-default">Submit</button>
+									 	<button type="submit" class="btn btn-primary">Submit</button>
 
 								</form:form>
 								
@@ -134,22 +138,20 @@
 					
 					<div id="multipart-form-data-model-attribute" class="tab-pane fade">
 				
-						<h3>Fill the Form and Select a File (<code>@ModelAttribute</code>)</h3>
-						
-						<p>Some content in menu 2.</p>
-						
 						<div class="container">
-						
-				  			<div class="jumbotron">
-						
+							
+							<div class="jumbotron">
+								
+								<h3>Fill the Form and Select a File (<code>@ModelAttribute</code>)</h3>
+								
 								<form:form method="POST" action="/upload/uploadFileModelAttribute" enctype="multipart/form-data">
 								
 									 	<div class="form-group">
-											<label for="name">Name</label>
+											<label for="name">Name:</label>
 											<input type="text" name="name" />
 										</div>
 										 <div class="form-group">
-											<label for="email">Email</label>
+											<label for="email">Email:</label>
 											<input type="text" name="email" />
 										</div>
 										 <div class="form-group">
@@ -157,7 +159,7 @@
 											<input type="file" name="file" />
 										</div>
 
-									 	<button type="submit" class="btn btn-default">Submit</button>
+									 	<button type="submit" class="btn btn-primary">Submit</button>
 
 								</form:form>
 
@@ -174,6 +176,8 @@
 			<div class="col-sm-3"></div>
 
 		</div>
+
+		<%@ include file="footer.jsp" %>
 
 	</body>
 
