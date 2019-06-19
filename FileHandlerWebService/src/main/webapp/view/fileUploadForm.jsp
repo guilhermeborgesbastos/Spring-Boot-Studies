@@ -4,17 +4,23 @@
 
 <html>
 	<head>
-		<spring:url value="/main.css" var="mainCss" />
+		<title>File Upload Example</title>
+		<spring:url value="/css/main.css" var="mainCss" />
+		<spring:url value="/js/main.js" var="mainJs" />
 		<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
 		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-		<title>File Upload Example</title>
 		<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="${mainCss}"/>
+		<script src="${mainJs}"></script>
 	</head>
 	
 	<body>
-		
-		<br /><br />
+
+		<div class="row">			
+			<div class="col-sm-3"></div>			
+			<div class="col-sm-6"><%@ include file="nav.jsp" %></div>
+			<div class="col-sm-3"></div>
+		</div>
 		
 		<div class="row">
 			
@@ -34,7 +40,7 @@
 			<div class="col-sm-3"></div>
 		
 		</div>
-		
+
 		<div class="row">
 			
 			<div class="col-sm-3"></div>

@@ -21,36 +21,7 @@ p.property {
     padding-bottom: 0.5em;
 }
 
-/* 
- * A simple machine state in order to display only the
- * respectibe view for each from.
- */
-
-.container .jumbotron.uploadFile,
-.container .jumbotron.uploadMultiFile,
-.container .jumbotron.uploadFileWithAdditionalData,
-.container .jumbotron.uploadFileModelAttribute {
-    display: none;
-}
-
-.container.uploadFile .jumbotron.uploadFile {
-    display: block;
-}
-
-.container.uploadMultiFile .jumbotron.uploadMultiFile {
-    display: block;
-}
-
-.container.uploadFileWithAdditionalData .jumbotron.uploadFileWithAdditionalData {
-    display: block;
-}
-
-.container.uploadFileModelAttribute .jumbotron.uploadFileModelAttribute {
-    display: block;
-}
-
 /* Footer */
-
 
 .page-footer {
     text-align: center;
@@ -66,4 +37,23 @@ p.property {
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+}
+
+/* Nav bar */
+
+.navbar {
+    background-color: #e7e7e7;
+    margin-top: 1em;
+}
+.navbar-nav {
+    display: -ms-flexbox;
+    display: inherit;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    list-style: none;
+}
+.navbar-nav > li {
+    padding: 1em;
+    border-right: 2px solid #9999992b;
+    font-size: 1.1em;
 }
