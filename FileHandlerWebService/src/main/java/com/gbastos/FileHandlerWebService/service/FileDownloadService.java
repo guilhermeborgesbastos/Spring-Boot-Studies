@@ -73,19 +73,19 @@ public class FileDownloadService {
    * @return the list of files
    */
   public List<String> fetchFileNamesFromStorage() {
-    
+
     final File folder = new File(uploadTempDir);
     final File[] listOfFiles = folder.listFiles();
-    
+
     final List<String> fileNames = new ArrayList<String>();
 
     for (int i = 0; i < listOfFiles.length; i++) {
-      
+
       if (listOfFiles[i].isFile()) {
         fileNames.add(listOfFiles[i].getName());
       }
     }
-    
+
     return fileNames;
   }
 }

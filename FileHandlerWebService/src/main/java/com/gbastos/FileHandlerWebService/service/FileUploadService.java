@@ -51,8 +51,8 @@ public class FileUploadService implements IFileUpload{
    */
   public Boolean uploadMultiFile(MultipartFile[] files) throws IOException {
     for (MultipartFile file : files) {
-      writeFile(file);      
+      writeFile(file);
     }
     return true;
-  }  
+  }
 }
