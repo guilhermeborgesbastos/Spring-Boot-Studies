@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 public class FileUploadController {
 
   private static final Logger LOG = LoggerFactory.getLogger(FileUploadController.class);
+  private static final String REQUEST_URI = "requestURI";
 
   @Autowired
   private FileUploadService fileUploadService;
@@ -43,7 +44,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("file", file);
-    modelMap.addAttribute("viewMode", "uploadFile");
+    modelMap.addAttribute(REQUEST_URI, "uploadFile");
     return "fileUploadView";
   }
 
@@ -58,7 +59,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("files", files);
-    modelMap.addAttribute("viewMode", "uploadMultiFile");
+    modelMap.addAttribute(REQUEST_URI, "uploadMultiFile");
     return "fileUploadView";
   }
 
@@ -75,7 +76,7 @@ public class FileUploadController {
     modelMap.addAttribute("name", name);
     modelMap.addAttribute("email", email);
     modelMap.addAttribute("file", file);
-    modelMap.addAttribute("viewMode", "uploadFileWithAdditionalData");
+    modelMap.addAttribute(REQUEST_URI, "uploadFileWithAdditionalData");
     
     return "fileUploadView";
   }
@@ -91,7 +92,7 @@ public class FileUploadController {
     }
 
     modelMap.addAttribute("formDataWithFile", formDataWithFile);
-    modelMap.addAttribute("viewMode", "uploadFileModelAttribute");
+    modelMap.addAttribute(REQUEST_URI, "uploadFileModelAttribute");
     return "fileUploadView";
   }
 }
