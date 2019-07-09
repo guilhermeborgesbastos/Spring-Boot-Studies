@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.model;
+package com.gbastos.ThymeleafTemplate.model;
 
 import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;

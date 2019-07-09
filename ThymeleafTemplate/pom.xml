@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.gbastos</groupId>
-	<artifactId>FileHandlerWebService</artifactId>
+	<artifactId>ThymeleafTemplate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>FileHandlerWebService</name>
-	<description>Demo project for Spring Boot File Handler web service</description>
+	<name>ThymeleafTemplate</name>
+	<description>Demo project for Spring Boot Thymeleaf template</description>
 
 	<properties>
 		<java.version>1.8</java.version>

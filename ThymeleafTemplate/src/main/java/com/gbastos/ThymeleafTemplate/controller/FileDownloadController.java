@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.controller;
+package com.gbastos.ThymeleafTemplate.controller;
 
 import java.util.List;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.gbastos.FileHandlerWebService.service.FileDownloadService;
+import com.gbastos.ThymeleafTemplate.service.FileDownloadService;
 
 /**
  * The Class FileDownloadController it is a simple sample of a Web Service used to handle Files on

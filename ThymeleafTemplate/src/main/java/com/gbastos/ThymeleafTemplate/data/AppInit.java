@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.data;
+package com.gbastos.ThymeleafTemplate.data;
 
 import java.util.TimeZone;
 

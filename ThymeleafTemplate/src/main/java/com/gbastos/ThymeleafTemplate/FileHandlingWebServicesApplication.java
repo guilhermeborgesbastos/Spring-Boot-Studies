@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService;
+package com.gbastos.ThymeleafTemplate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

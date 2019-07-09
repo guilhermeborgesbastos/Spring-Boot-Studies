@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.filters;
+package com.gbastos.ThymeleafTemplate.filters;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

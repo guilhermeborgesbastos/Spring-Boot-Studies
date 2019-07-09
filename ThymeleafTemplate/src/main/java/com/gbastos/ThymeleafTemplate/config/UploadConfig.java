@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.config;
+package com.gbastos.ThymeleafTemplate.config;
 
 import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;

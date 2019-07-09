@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.service;
+package com.gbastos.ThymeleafTemplate.service;
 
 import java.io.File;
 import java.io.FileInputStream;

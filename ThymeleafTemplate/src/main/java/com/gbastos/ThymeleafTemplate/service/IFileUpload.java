@@ -1,4 +1,4 @@
-package com.gbastos.FileHandlerWebService.service;
+package com.gbastos.ThymeleafTemplate.service;
 
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
