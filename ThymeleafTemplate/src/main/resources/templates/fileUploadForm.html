@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+	<title>File Upload Example</title>
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/main.js}"></script>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+	<div class="row">			
+		<div class="col-sm-3"></div>			
+		<div class="col-sm-6">
+			<div th:replace="fragment/nav">...</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+	
+	<div class="row">
+		
+		<div class="col-sm-3"></div>
+		
+			<div class="col-sm-6">
+			
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#single-file">Single file</a></li>
+				<li><a data-toggle="tab" href="#multiple-files">Multiple files</a></li>
+				<li><a data-toggle="tab" href="#multipart-form-data-request-param">Request Param</a></li>
+				<li><a data-toggle="tab" href="#multipart-form-data-model-attribute">Model Attribute</a></li>
+			</ul>
+		
+		</div>
+		
+		<div class="col-sm-3"></div>
+	
+	</div>
+
+	<div class="row">
+		
+		<div class="col-sm-3"></div>
+		
+			<div class="col-sm-6">
+			
+			<div class="tab-content">
+			
+				<div id="single-file" class="tab-pane fade in active">
+
+					<div class="container">
+						
+						<div class="jumbotron">
+							
+							<h3>Enter The File to Upload <i>(Single file)</i></h3>
+
+							<form method="POST" action="/upload/uploadFile" enctype="multipart/form-data">
+								
+								 <div class="form-group">
+								 
+									 <label for="file">Select a file to upload</label>
+									 <input type="file" name="file" />
+								 
+								 </div>
+								 
+								 <button type="submit" class="btn btn-primary">Submit</button>
+								
+							</form>
+							
+						</div>
+						
+					</div>
+					
+				</div>
+				
+				<div id="multiple-files" class="tab-pane fade">
+					
+					<div class="container">
+						
+						<div class="jumbotron">
+
+							<h3>Enter The Files to Upload <i>(Multiple files)</i></h3>
+
+							<form method="POST" action="/upload/uploadMultiFile" enctype="multipart/form-data">
+
+								 <div class="form-group">
+										<label for="files">Select a file to upload</label>
+										<input type="file" name="files" />
+								 </div>
+								 <div class="form-group">
+										<label for="files">Select a file to upload</label>
+										<input type="file" name="files" />
+								 </div>
+								 <div class="form-group">
+										<label for="files">Select a file to upload</label>
+										<input type="file" name="files" />
+								 </div>
+
+								 <button type="submit" class="btn btn-primary">Submit</button>
+								 
+							</form>
+						
+						</div>
+					
+					</div>
+					
+				</div>
+				
+				<div id="multipart-form-data-request-param" class="tab-pane fade">
+					
+					<div class="container">
+						
+						<div class="jumbotron">
+							
+							<h3>Fill the Form and Select a File (<code>@RequestParam</code>)</h3>
+
+							<form method="POST" action="/upload/uploadFileWithAdditionalData" enctype="multipart/form-data">
+							
+								    <div class="form-group">
+										<label for="name">Name:</label>
+										<input type="text" name="name" />
+									</div>
+									<div class="form-group">
+										<label for="email">Email:</label>
+										<input type="text" name="email" />
+									</div>
+									<div class="form-group">
+										<label for="file">Select a file to upload</label>
+										<input type="file" name="file" />
+									</div>
+
+								 	<button type="submit" class="btn btn-primary">Submit</button>
+
+							</form>
+							
+						</div>
+					
+					</div>
+					
+				</div>
+				
+				<div id="multipart-form-data-model-attribute" class="tab-pane fade">
+			
+					<div class="container">
+						
+						<div class="jumbotron">
+							
+							<h3>Fill the Form and Select a File (<code>@ModelAttribute</code>)</h3>
+							
+							<form method="POST" action="/upload/uploadFileModelAttribute" enctype="multipart/form-data">
+							
+								 	<div class="form-group">
+										<label for="name">Name:</label>
+										<input type="text" name="name" />
+									</div>
+									 <div class="form-group">
+										<label for="email">Email:</label>
+										<input type="text" name="email" />
+									</div>
+									 <div class="form-group">
+										<label for="file">Select a file to upload</label>
+										<input type="file" name="file" />
+									</div>
+
+								 	<button type="submit" class="btn btn-primary">Submit</button>
+
+							</form>
+
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-sm-3"></div>
+
+	</div>
+
+	<div th:replace="fragment/footer">...</div>
+
+</body>
+</html>

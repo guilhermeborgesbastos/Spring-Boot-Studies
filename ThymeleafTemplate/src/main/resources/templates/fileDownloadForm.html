@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="lang=${#locale.language}" th:lang="${lang}">
+<head>
+	<title>File Upload Example</title>
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<div th:replace="fragment/nav">...</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+
+	<div class="row">
+
+		<div class="col-sm-3"></div>
+
+		<div class="col-sm-6">
+
+			<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#single-file">Download
+						Single file</a></li>
+			</ul>
+
+		</div>
+
+		<div class="col-sm-3"></div>
+
+	</div>
+
+	<div class="row">
+
+		<div class="col-sm-3"></div>
+
+		<div class="col-sm-6">
+
+			<div class="tab-content">
+
+				<div id="single-file" class="tab-pane fade in active">
+
+					<div class="container">
+
+						<div class="jumbotron">
+
+							<h3>
+								Enter The File to Download <i>(Single file)</i>
+							</h3>
+							
+							<form method="POST" action="/download/file" enctype="multipart/form-data">
+
+								<div class="form-group">
+									<label for="fileName">File Name:</label>
+									<span th:if="${files==null || files.isEmpty()}">No file uploaded yet.</span>
+									<select class="browser-default custom-select" name="fileName"
+										th:unless="${files==null || files.isEmpty()}">
+										<option
+											th:each="file : ${files}"
+											th:value="${file}"
+											th:text="${file}">Select a file</option>
+									</select>
+
+								</div>
+
+								<button type="submit" class="btn btn-primary"
+									th:disabled="${files==null || files.isEmpty()}">Download</button>
+
+							</form>
+							
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="col-sm-3"></div>
+
+	</div>
+
+	<div th:replace="fragment/footer">...</div>
+
+</body>
+</html>

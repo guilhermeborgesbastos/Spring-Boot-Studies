@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="lang=${#locale.language}" th:lang="${lang}">
+	<head>
+		<title>File Upload Example</title>
+		<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+		<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<script th:src="@{/js/main.js}"></script>
+		<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+		<link rel="stylesheet" th:href="@{/css/main.css}"/>
+	</head>
+	<body>
+	
+		<div class="row">			
+			<div class="col-sm-3"></div>			
+			<div class="col-sm-6">
+				<div th:replace="fragment/nav">...</div>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+		
+		<div class="row">
+			
+			<div class="col-sm-3"></div>
+			
+				<div class="col-sm-6">
+				
+					<div class="container">
+					
+						<div class="jumbotron uploadFile" th:if="${requestURI == 'uploadFile'}">				
+							<h2>Submitted File <i>(Single)</i></h2>
+							<div class="well well-sm">
+								<p class="property">Original File Name:</p>
+								<p th:text="${file.originalFilename}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Type:</p>
+								<p th:text="${file.contentType}">...</p>
+							</div>
+						</div>
+
+						<div class="jumbotron uploadMultiFile" th:if="${requestURI == 'uploadMultiFile'}">
+							<h2>Submitted Files <i>(Multiple)</i></h2>							
+							<div class="well well-sm" th:each="file : ${files}">
+								<p class="property">Original File Name:</p>
+								<p th:text="${file.originalFilename}">...</p>
+								<p class="property">Type:</p>
+								<p th:text="${file.contentType}">...</p>
+							</div>
+						</div>
+
+						<div class="jumbotron uploadFileWithAdditionalData" th:if="${requestURI == 'uploadFileWithAdditionalData'}">	
+							<h2>Submitted File with Data (<code>@RequestParam</code>)</h2>
+							<div class="well well-sm">
+								<p class="property">Name:</p>
+								<p th:text="${name}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Email:</p>
+								<p th:text="${email}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Original File Name:</p>
+								<p th:text="${file.originalFilename}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Type:</p>
+								<p th:text="${file.contentType}">...</p>
+							</div>
+						</div>
+
+						<div class="jumbotron uploadFileModelAttribute" th:if="${requestURI == 'uploadFileModelAttribute'}">
+							<h2>Submitted File with Data (<code>@ModelAttribute</code>)</h2>
+							<div class="well well-sm">
+								<p class="property">Name:</p>
+								<p th:text="${formDataWithFile.name}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Email:</p>
+								<p th:text="${formDataWithFile.email}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Original File Name:</p>
+								<p th:text="${formDataWithFile.file.originalFilename}">...</p>
+							</div>
+							<div class="well well-sm">
+								<p class="property">Type:</p>
+								<p th:text="${formDataWithFile.file.contentType}">...</p>
+							</div>
+						</div>
+					
+					</div>
+					
+				</div>
+	
+			</div>
+			
+			<div th:replace="fragment/footer">...</div>
+				
+	</body>
+</html>
